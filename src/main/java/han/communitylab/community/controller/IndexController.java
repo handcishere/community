@@ -1,5 +1,6 @@
 package han.communitylab.community.controller;
 
+import han.communitylab.community.dto.PaginationDTO;
 import han.communitylab.community.dto.QuestionDTO;
 import han.communitylab.community.mapper.QuestionMapper;
 import han.communitylab.community.mapper.UserMapper;
@@ -27,7 +28,10 @@ public class IndexController {
 
     @GetMapping("/")
     public String hello(HttpServletRequest request,
-                        Model model) {
+                        Model model,
+                        @RequestParam(name="page",defaultValue = "1")Integer page,
+                        @RequestParam(name="size",defaultValue = "5")Integer size
+    ) {
         Cookie[] cookies = request.getCookies();
         if(cookies!=null&&cookies.length!=0)
             for (Cookie cookie : cookies) {
@@ -41,8 +45,8 @@ public class IndexController {
                 }
             }
 
-        List<QuestionDTO> questionList=questionService.List();
-        model.addAttribute("questions",questionList);
+        PaginationDTO pagination=questionService.List(page,size);
+        model.addAttribute("pagination",pagination);
         return "index";
     }
 }
