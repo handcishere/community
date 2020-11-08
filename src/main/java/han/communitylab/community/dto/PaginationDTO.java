@@ -16,15 +16,9 @@ public class PaginationDTO {
     private Integer totalPage ;
     private List<Integer> pages=new ArrayList<>();
 
-    public void setPagination(Integer totalCount, Integer page, Integer size) {
+    public void setPagination(Integer totalPage, Integer page) {
 
-
-
-        if(totalCount % size==0){
-            totalPage=totalCount / size;
-        }else{
-            totalPage=totalCount / size +1;
-        }
+        this.totalPage=totalPage;
 
         this.page=page;
         pages.add(page);
@@ -36,7 +30,6 @@ public class PaginationDTO {
                 pages.add(page+i);
             }
         }
-
         //是否展示上1页
         if(page==1) showPrevious=false;
         else showPrevious=true;
