@@ -1,5 +1,6 @@
 package han.communitylab.community.exception;
 
-public interface CustomizeErrorCode {
-    
+public interface ICustomizeErrorCode {
+    String getMessage();
+    Integer getCode();
 }
