@@ -2,6 +2,7 @@ package han.communitylab.community.controller;
 
 import han.communitylab.community.dto.CommentDTO;
 import han.communitylab.community.dto.QuestionDTO;
+import han.communitylab.community.enums.CommentTypeEnum;
 import han.communitylab.community.service.CommentService;
 import han.communitylab.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class QuestionController {
     @GetMapping("/question/{id}")
     public  String question(@PathVariable(name="id")Long id, Model model){
         QuestionDTO questionDTO=questionService.getById(id);
-        List<CommentDTO> comments=commentService.ListByQuestionId(id);
+        List<CommentDTO> comments=commentService.ListByTargetId(id, CommentTypeEnum.QUESTION);
         //阅读+1
         questionService.incView(id);
         model.addAttribute("question",questionDTO);

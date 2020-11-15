@@ -1,7 +1,9 @@
 package han.communitylab.community.controller;
 
 import han.communitylab.community.dto.CommentCreateDTO;
+import han.communitylab.community.dto.CommentDTO;
 import han.communitylab.community.dto.ResultDTO;
+import han.communitylab.community.enums.CommentTypeEnum;
 import han.communitylab.community.exception.CustomizeErrorCode;
 import han.communitylab.community.model.Comment;
 import han.communitylab.community.model.User;
@@ -9,12 +11,10 @@ import han.communitylab.community.service.CommentService;
 import org.h2.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class CommentController {
@@ -40,5 +40,11 @@ public class CommentController {
         comment.setLikeCount(0L);
         commentService.insert(comment);
         return ResultDTO.okOf();
+    }
+    @ResponseBody
+    @RequestMapping(value="/comment/{id}",method = RequestMethod.GET)
+    public  ResultDTO comments(@PathVariable(name="id")Long id){
+        List<CommentDTO> commentDTOS = commentService.ListByTargetId(id, CommentTypeEnum.COMMENT);
+        return ResultDTO.okOf(commentDTOS);
     }
 }
