@@ -4,10 +4,7 @@ import han.communitylab.community.dto.CommentDTO;
 import han.communitylab.community.enums.CommentTypeEnum;
 import han.communitylab.community.exception.CustomizeErrorCode;
 import han.communitylab.community.exception.CustomizeException;
-import han.communitylab.community.mapper.CommentMapper;
-import han.communitylab.community.mapper.QuestionExtMapper;
-import han.communitylab.community.mapper.QuestionMapper;
-import han.communitylab.community.mapper.UserMapper;
+import han.communitylab.community.mapper.*;
 import han.communitylab.community.model.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +27,8 @@ public class CommentService {
     private QuestionExtMapper extMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private CommentExtMapper commentExtMapper;
     @Transactional
     public void insert(Comment comment) {
 
@@ -46,6 +45,10 @@ public class CommentService {
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             }
             commentMapper.insert(comment);
+            Comment parentComment = new Comment();
+            parentComment.setId(comment.getParentId());
+            parentComment.setCommentCount(1);
+            commentExtMapper.incCommentCount(parentComment);
         }
         else{
             //回复问题
@@ -53,6 +56,7 @@ public class CommentService {
             if(question==null){
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
+            comment.setCommentCount(0);
             commentMapper.insert(comment);
             question.setCommentCount(1);
             extMapper.incCommentCount(question);
