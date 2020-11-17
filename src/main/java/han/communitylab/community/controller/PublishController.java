@@ -29,12 +29,12 @@ public class PublishController {
         model.addAttribute("id",question.getId());
         return "publish";
     }
-    @GetMapping("/publish")
+    @GetMapping("/publish")//渲染页面
     public String publish(){
         return "publish";
     }
     @PostMapping("/publish")
-    public String doPublish(
+    public String doPublish(//执行请求
             @RequestParam(value = "title",required = false) String title,
             @RequestParam(value ="description",required = false) String description,
             @RequestParam(value ="tag",required = false) String tag,
