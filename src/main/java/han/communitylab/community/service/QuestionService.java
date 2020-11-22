@@ -3,6 +3,7 @@ package han.communitylab.community.service;
 
 import han.communitylab.community.dto.PaginationDTO;
 import han.communitylab.community.dto.QuestionDTO;
+import han.communitylab.community.dto.QustionQueryDTO;
 import han.communitylab.community.exception.CustomizeErrorCode;
 import han.communitylab.community.exception.CustomizeException;
 import han.communitylab.community.mapper.QuestionExtMapper;
@@ -32,11 +33,19 @@ public class QuestionService {
     private QuestionMapper questionMapper;
     @Autowired
     private QuestionExtMapper questionExtMapper;
-    public PaginationDTO List(Integer page, Integer size) {
+    public PaginationDTO List(String search, Integer page, Integer size) {
+        if(StringUtils.isNotBlank(search)){
+            String[] tags = StringUtils.split(search, " ");
+            search = Arrays.stream(tags).collect(Collectors.joining("|"));
+        }
+
+
         PaginationDTO paginationDTO=new PaginationDTO();
         Integer totalPage ;
         QuestionExample example = new QuestionExample();
-        Integer totalCount = (int)questionMapper.countByExample(example);
+        QustionQueryDTO qustionQueryDTO = new QustionQueryDTO();
+        qustionQueryDTO.setSearch(search);
+        Integer totalCount = questionExtMapper.countBySearch(qustionQueryDTO);
         if(totalCount % size==0){
             totalPage=totalCount / size;
         }else{
@@ -49,7 +58,9 @@ public class QuestionService {
         Integer offset=size*(page-1);
         QuestionExample questionExample = new QuestionExample();
         questionExample.setOrderByClause("gmt_create desc");
-        List<Question> questions = questionMapper.selectByExampleWithRowbounds(questionExample, new RowBounds(offset, size));
+        qustionQueryDTO.setSize(size);
+        qustionQueryDTO.setPage(offset);
+        List<Question> questions = questionExtMapper.selectBySearch(qustionQueryDTO);
         List<QuestionDTO> questionDTOList=new ArrayList<>();
 
         for (Question question : questions) {

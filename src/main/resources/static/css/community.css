@@ -1,9 +1,9 @@
 body {
-    background-color: #efefef;
+    background-color: lightgrey;
 }
 
 .main {
-    background-color: white;
+    background-color: whitesmoke;
     margin: 30px;
 }
 
@@ -114,4 +114,8 @@ body {
 }
 .menu .icon:hover {
     color: #499ef3;
+}
+.footer{
+    padding: 10px 30%;
+    color: #666;
 }
