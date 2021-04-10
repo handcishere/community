@@ -61,19 +61,33 @@
 
                             </ul>
                             <!-- Tab panes -->
-                            <div class="tab-content">
-                                <div role="tabpanel"  th:id="${selectCategory.categoryName}"
-                                     th:each="selectCategory : ${tags}"
-                                     th:class="selectCategoryStat.first ? 'active tab-pane':'tab-pane'">
-                                    <span class="label label-info " th:each="selectTag : ${selectCategory.tags}">
-                                        <span class="glyphicon glyphicon-tag" onclick="selectTag(this)" th:data-tag="${selectTag}"
-                                              th:text="${' '+selectTag}">
-                                        </span>
+<!--                            <div class="tab-content">-->
+<!--                                <div role="tabpanel"  th:id="${selectCategory.categoryName}"-->
+<!--                                     th:each="selectCategory : ${tags}"-->
+<!--                                     th:class="selectCategoryStat.first ? 'active tab-pane':'tab-pane'">-->
+<!--                                    <span class="label label-info " th:each="selectTag : ${selectCategory.tags}">-->
+<!--                                        <span class="glyphicon glyphicon-tag" onclick="selectTag(this)" th:data-tag="${selectTag}"-->
+<!--                                              th:text="${' '+selectTag}">-->
+<!--                                        </span>-->
+<!--                                    </span>-->
+<!--                                </div>-->
+
+
+<!--                            </div>-->
+                        <div class="tab-content">
+                            <div role="tabpanel" th:id="${selectCategory.categoryName}"
+                                 th:each="selectCategory: ${tags}"
+                                 th:class="${selectCategoryStat.first ? 'active tab-pane':'tab-pane'}">
+                                <span>
+                                    <span th:each="selectTag: ${selectCategory.tags}">
+                                    <span class="community-tag" onclick="selectTag(this)"
+                                          th:data-tag="${selectTag}"
+                                          th:text="${' '+selectTag}">
                                     </span>
-                                </div>
-
-
+                                </span>
+                                </span>
                             </div>
+                        </div>
 
                     </div>
                 </div>
