@@ -12,10 +12,27 @@ import java.util.stream.Stream;
 public  class TagCache {
     public static List<TagDTO> get(){
         ArrayList<TagDTO> tagDTOS = new ArrayList<>();
+
         TagDTO program = new TagDTO();
-        program.setCategoryName("开发语言");
-        program.setTags(Arrays.asList("cpp","java"));
+        program.setCategoryName("球类");
+        program.setTags(Arrays.asList("篮球","足球","乒乓球","羽毛球","排球"));
         tagDTOS.add(program);
+
+         program = new TagDTO();
+        program.setCategoryName("艺术类");
+        program.setTags(Arrays.asList("音乐","美术","雕塑","艺体","表演","编导"));
+        tagDTOS.add(program);
+
+         program = new TagDTO();
+        program.setCategoryName("开发语言");
+        program.setTags(Arrays.asList("cpp","java","python","c#","golang","javascript","c"));
+        tagDTOS.add(program);
+
+        program = new TagDTO();
+        program.setCategoryName("游戏");
+        program.setTags(Arrays.asList("LOL","PUBG","DNF","原神","塞尔达"));
+        tagDTOS.add(program);
+        
         return tagDTOS;
     }
     public static String filterInvalid(String tags){

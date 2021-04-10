@@ -20,7 +20,7 @@ public class HotTagTasks {
     private QuestionMapper questionMapper;
     @Autowired
     private HotTagCache hotTagCache;
-    @Scheduled(fixedRate = 1000*60*60*12)
+    @Scheduled(fixedRate = 1000*60*60*6)
     //@Scheduled(cron = "0 0 1 * * *")
     public void hotTagSchedule(){
         int offset = 0;
